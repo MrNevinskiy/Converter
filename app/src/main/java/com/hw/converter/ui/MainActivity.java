@@ -1,11 +1,14 @@
 package com.hw.converter.ui;
 
+import android.Manifest;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
 
 import com.hw.converter.ConverterApp;
 import com.hw.converter.R;
@@ -47,6 +50,11 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, View
 
         start.setOnClickListener(this);
         cancel.setOnClickListener(this);
+        requestPermission();
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 44);
     }
 
     @Override
