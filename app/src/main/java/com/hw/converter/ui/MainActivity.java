@@ -2,6 +2,7 @@ package com.hw.converter.ui;
 
 import android.Manifest;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +51,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, View
 
         start.setOnClickListener(this);
         cancel.setOnClickListener(this);
+
         requestPermission();
     }
 
@@ -68,7 +70,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, View
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_bt:
-                presenter.start(PATH);
+                presenter.startConvert(PATH);
                 break;
             case R.id.cancel_bt:
                 presenter.cancel();
@@ -77,16 +79,16 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, View
     }
 
     @Override
-    public void startConvert(Object[] object, String status) {
-        after_i.setImageBitmap((Bitmap) object[1]);
-        before_i.setImageBitmap((Bitmap) object[0]);
+    public void startConvert(Object object, String status) {
+        before_i.setImageURI(Uri.parse(PATH));
+        after_i.setImageBitmap((Bitmap) object);
         info_tv.setText(status);
     }
 
     @Override
-    public void cancelConvert(Object[] object, String status) {
-        after_i.setImageBitmap((Bitmap) object[1]);
-        before_i.setImageBitmap((Bitmap) object[0]);
+    public void cancelConvert(Object object, String status) {
+        before_i.setImageURI(Uri.parse(PATH));
+        after_i.setImageBitmap((Bitmap) object);
         info_tv.setText(status);
     }
 
