@@ -16,7 +16,7 @@ public class Model {
     public Object after = null;
 
 
-    public void startConverter(String path) {
+    public Object startConverter(String path) {
         try {
             File file = new File("/sdcard/Converter/");
             if (!file.exists()) {
@@ -33,16 +33,11 @@ public class Model {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return after;
     }
 
-    public Observable<Object> finishConverter(){
-        return Observable.just(after);
+    public Observable<Object> finishConverter(String path){
+        return Observable.just(startConverter(path));
     }
-
-
-    public Observable<Object> cancelConverter(){
-        return Observable.just(after);
-    }
-
 
 }

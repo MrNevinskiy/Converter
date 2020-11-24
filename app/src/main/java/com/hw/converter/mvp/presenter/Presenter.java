@@ -17,12 +17,9 @@ public class Presenter extends MvpPresenter<MainView> {
     private Router router = ConverterApp.getApplication().getRouter();
     private Model model = new Model();
     private Disposable disposable = null;
-    private String path = null;
 
-    public void startConvert(String path){
-        this.path = path;
-        model.startConverter(path);
-        model.finishConverter()
+    public void startConvert(String path) {
+        model.finishConverter(path)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observable);
@@ -37,19 +34,23 @@ public class Presenter extends MvpPresenter<MainView> {
 
         @Override
         public void onNext(@NonNull Object o) {
-            getViewState().startConvert(o,"OK");
+            getViewState().startConvert(o, "OK");
         }
 
         @Override
-        public void onError(@NonNull Throwable e) {}
+        public void onError(@NonNull Throwable e) {
+        }
 
         @Override
-        public void onComplete() {}
+        public void onComplete() {
+        }
     };
 
     public void cancel() {
-        disposable.dispose();
-        getViewState().cancelConvert(model.cancelConverter(), "cancel");
+        if (disposable != null) {
+            disposable.dispose();
+            getViewState().cancelConvert("canceled");
+        }
     }
 
     public void backClicked() {
