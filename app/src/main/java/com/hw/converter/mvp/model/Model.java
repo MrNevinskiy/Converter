@@ -26,7 +26,7 @@ public class Model {
             Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
             before = bitmap;
             FileOutputStream fileOutputStream = new FileOutputStream(file + "/new.png");
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, fileOutputStream);
             after = bitmap;
             fileInputStream.close();
             fileOutputStream.close();
