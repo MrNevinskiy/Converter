@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class Model {
 
@@ -16,7 +16,7 @@ public class Model {
     public Object after = null;
 
 
-    public Object startConverter(String path) {
+    public Single<Object> finishConverter(String path){
         try {
             File file = new File("/sdcard/Converter/");
             if (!file.exists()) {
@@ -26,18 +26,13 @@ public class Model {
             Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
             before = bitmap;
             FileOutputStream fileOutputStream = new FileOutputStream(file + "/new.png");
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, fileOutputStream);
             after = bitmap;
             fileInputStream.close();
             fileOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return after;
+        return Single.just(after);
     }
-
-    public Observable<Object> finishConverter(String path){
-        return Observable.just(startConverter(path));
-    }
-
 }

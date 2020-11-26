@@ -5,8 +5,6 @@ import com.hw.converter.mvp.model.Model;
 import com.hw.converter.mvp.view.MainView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import moxy.MvpPresenter;
@@ -19,32 +17,11 @@ public class Presenter extends MvpPresenter<MainView> {
     private Disposable disposable = null;
 
     public void startConvert(String path) {
-        model.finishConverter(path)
+        disposable = model.finishConverter(path)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observable);
+                .subscribe(o -> getViewState().startConvert(o, "OK"));
     }
-
-    final Observer<Object> observable = new Observer<Object>() {
-
-        @Override
-        public void onSubscribe(@NonNull Disposable d) {
-            disposable = d;
-        }
-
-        @Override
-        public void onNext(@NonNull Object o) {
-            getViewState().startConvert(o, "OK");
-        }
-
-        @Override
-        public void onError(@NonNull Throwable e) {
-        }
-
-        @Override
-        public void onComplete() {
-        }
-    };
 
     public void cancel() {
         if (disposable != null) {
