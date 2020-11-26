@@ -20,7 +20,7 @@ public class Presenter extends MvpPresenter<MainView> {
         disposable = model.finishConverter(path)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> getViewState().startConvert(o, "OK"));
+                .subscribe(o -> getViewState().startConvert((Object[]) o, "OK"));
     }
 
     public void cancel() {
