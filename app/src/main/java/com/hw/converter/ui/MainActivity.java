@@ -79,9 +79,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, View
     }
 
     @Override
-    public void startConvert(Object object, String status) {
-        before_i.setImageURI(Uri.parse(PATH));
-        after_i.setImageBitmap((Bitmap) object);
+    public void startConvert(Object[] object, String status) {
+        before_i.setImageBitmap((Bitmap) object[1]);
+        after_i.setImageBitmap((Bitmap) object[0]);
         info_tv.setText(status);
     }
 
